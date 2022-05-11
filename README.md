@@ -26,34 +26,28 @@ y reportar todas al final.
 ![image](https://user-images.githubusercontent.com/90789825/167893945-866015df-cdeb-4221-b71f-f3fd2b7b0063.png)
 
 ## Reglas y comentarios adicionales
-1. **Deus ex Machina:** Reducción de puntaje por solicitar asistencia humana.
-   - Entrega de la bolsa. **Penalty:** -100pts.
-   - Encontrar al operador mientras la sigue:
-     - Interacción natural (por ejemplo, saludar o llamar). **Penalty:** -100pts.
-     - Interacción no natural (por ejemplo, levantar ambas manos o saltar). **Penalty:** -200pts.
-     - Tocar el robot (por ejemplo, tirar de la mano del robot). **Penalty:** -400pts.
-2. **Obstáculos:** El robot se enfrentará a 4 obstáculos en su camino en cualquier orden:
-   A. Una multitud obstruyendo el camino.
-   B. Un pequeño objeto en el suelo.
-   C. Un objeto 3D difícil de ver.
-   D. Una pequeña área bloqueada con barreras retráctiles.
-3. **Localización del Coche:** No hay coche afuera. En cambio, se supone que una ubicación fija es una ubicación de automóvil fuera de la arena.
-4. **Alcanzar el Coche:** El robot puede llegar a la ubicación del automóvil solo siguiendo al operador.
-5. **Siguiendo al operador:** El robot debe indicar al operador cuando está listo para
-seguir. El operador camina con naturalidad hacia el coche. Después de llegar al coche, el operador
-le quita la bolsa al robot y le agradece.
+1. **Deus ex Machina:** Reducción de puntaje por solicitar asistencia humana por huésped.
+   - Si una persona tiene que agitar el robot para ser encontrada. **Penalty:** -75pts.
+   - Si una persona tiene que decirle al robot dónde está sentada/de pie. **Penalty:** -75pts.
+   - Si una persona tiene que acercarse al robot (por ejemplo, caminar y pararse frente a él). **Penalty:** -150pts.
+2. **Informes:** los puntos se anotan solo cuando el robot regresa al operador y entrega
+el informe a tiempo.
+3. **Descripción de una Persona:** La descripción de cada huésped debe ser única; es decir, no compartido
+con cualquier otro invitado. Esto puede incluir ropa, edad, altura, complexión, color de piel, color de cabello, género, etc.
+4. **Ubicación de una persona:** una ubicación relativa basada en el entorno (p. ej., el niño está
+sentado en el carruaje, el hombre alto está de pie junto a la lámpara, etc.).
+
 ## Instrucciones del árbitro
 Los árbitros necesitan:
-- Seleccione un voluntario como operador.
-- Seleccione de tres a cuatro personas para obstruir el camino del robot afuera.
-- Elija las posiciones de las maletas y asigne una maleta al operador.
-- Elija a qué obstáculos se enfrentará el robot en el exterior mientras sigue al operador.
-- Elige la ubicación del coche.
-- Cuidado con el robot cuando salga de la arena.
+- Asigne nombres a los invitados.
+- Asegúrese de que cada persona tenga un nombre.
+- Asegúrese de que las personas permanezcan en el lugar designado.
+
 ## Instrucciones del CO
 2h antes del test:
-- Seleccione y anuncie el punto de partida del robot.
-- Seleccione qué maletas se utilizarán.
+- Anuncie la ubicación donde se instruirá al robot.
+- Anunciar la sala en la que se lleva a cabo la prueba.
+
 ## Hoja de puntuacion
 El tiempo máximo para esta prueba es de 5 minutos.
 
