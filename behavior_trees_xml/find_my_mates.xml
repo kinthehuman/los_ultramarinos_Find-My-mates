@@ -5,16 +5,23 @@
         <KeepRunningUntilFailure>
             <ForceSuccess>
                 <Sequence>
-                    <Action ID="Navegar3"/>
-                    <Action ID="Observar"/>
-                    <Action ID="TextToSpeech"/>
-                    <Action ID="DataCheck"/>
+                    <Fallback>
+                        <Condition ID="ControlData"/>
+                        <Sequence>
+                            <Action ID="Navegar3"/>
+                            <Fallback>
+                                <Condition ID="ControlObservador"/>
+                                <Action ID="Observar"/>
+                            </Fallback>
+                            <Action ID="DataCheck"/>
+                        </Sequence>
+                    </Fallback>
+                        <Action ID="Navegar3"/>
+                        <Fallback>
+                            <Condition ID="ControlDump"/>
+                            <Action ID="DataDump"/>
+                        </Fallback>
                 </Sequence>
-                <SequenceStar>
-                    <Action ID="Navegar3"/>
-                    <Action ID="DataDump"/>
-                    <Action ID="TextToSpeech"/>
-                </SequenceStar>
             </ForceSuccess>
         </KeepRunningUntilFailure>
     </BehaviorTree>
@@ -24,7 +31,9 @@
        <Action ID="DataCheck"/>
        <Action ID="DataDump"/>
        <Action ID="Navegar3"/>
-       <Action ID="TextToSpeech"/>
+       <Condition ID="ControlData"/>
+       <Condition ID="ControlDump"/>
+       <Condition ID="ControlObservador"/>
     </TreeNodesModel>
     <!-- ////////// -->
 </root>
