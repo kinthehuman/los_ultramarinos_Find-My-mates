@@ -20,6 +20,7 @@ cv_bridge::CvImagePtr RgbImageData;
 ros::Publisher mSensorsPublisher;
 ros::Subscriber Activador;
 ros::Publisher treePub;
+ros::Publisher controlPub;
 ros::Publisher objectPub;
 ros::Publisher talkPub;
 const int max_vals = 10;
@@ -32,13 +33,13 @@ double Bs [max_vals];
 int values_counter = 0;
 float min_dist;
 bool found_person;
-bool found_object = false;
 bool act = false;
 double now;
 int fr = 10;
 geometry_msgs::Pose2D pp;
 std_msgs::String msg;
 std_msgs::String object;
+std_msgs::Bool found;
 float xmax;
 float xmin;
 float ymax;
@@ -142,32 +143,7 @@ void callback_bbx(const sensor_msgs::ImageConstPtr& depth, const sensor_msgs::Im
 					}
 			}
 		}
-		
-
-		if (found_person && !found_object)
-		{
-			for(int i=0;i<boxes->bounding_boxes.size();i++)
-			{
-				float px = (boxes->bounding_boxes[i].xmax + boxes->bounding_boxes[i].xmin) / 2;
-				float py = (boxes->bounding_boxes[i].ymax + boxes->bounding_boxes[i].ymin) / 2;
-
-				float s1x = xmax - xmin;
-				float s2x = boxes->bounding_boxes[i].xmax - boxes->bounding_boxes[i].xmin;
-
-				float s1y = ymax - ymin;
-				float s2y = boxes->bounding_boxes[i].ymax - boxes->bounding_boxes[i].ymin;
-
-
-				if( (xmin < px < xmax) && (ymin < py < ymax) && (s1x > s2x) && (s1y > s2y) )
-				{
-					std::stringstream ss;
-					ss << boxes->bounding_boxes[i].Class;
-					object.data = ss.str();
-
-					found_object = true;
-				}
-			}
-			//if(!found_object || values_counter < max_vals)
+		if (found_person){
 			if(values_counter < max_vals)
 			{
 			std::stringstream ss;
@@ -196,6 +172,9 @@ void callback_bbx(const sensor_msgs::ImageConstPtr& depth, const sensor_msgs::Im
 
 				mSensorsPublisher.publish(pp);
 				objectPub.publish(object);
+
+				found.data = true;
+				controlPub.publish(found);
 
 				values_counter = 0;
 			}
@@ -232,6 +211,7 @@ int main(int argc, char** argv)
 	treePub = nh.advertise<std_msgs::String>("/status_observador", fr);
 	objectPub = nh.advertise<std_msgs::String>("/object_data", fr);
 	talkPub = nh.advertise<std_msgs::String>("/msg_receive", fr);
+	controlPub = nh.advertise<std_msgs::Bool>("/reset_observador", fr);
 
 	ros::spin();
 }

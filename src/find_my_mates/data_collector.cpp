@@ -1,6 +1,7 @@
 #include "ros/ros.h"
 #include "std_msgs/String.h"
 #include "std_msgs/Int32.h"
+#include "std_msgs/Bool.h"
 #include "geometry_msgs/Pose2D.h"
 #include <math.h>
 #include <string>
@@ -16,9 +17,17 @@ std_msgs::String oSensorsData;
 std_msgs::String msg;
 std_msgs::Int32 pp;
 std_msgs::Int32 pp2;
+std_msgs::Bool reset;
+std_msgs::Bool done;
 ros::Publisher talkPub;
 ros::Publisher treePub;
 ros::Publisher dumpPub;
+ros::Publisher observerPub;
+ros::Publisher dataPub;
+ros::Publisher donePub;
+
+
+
 
 struct Person {
 
@@ -175,6 +184,9 @@ void dump(ros::Publisher talkPub, ros::Publisher dumpPub, Person people[], int p
 	status << "SUCCESS";
 	msg.data = status.str();
 	dumpPub.publish(msg);
+
+    done.data = true;
+    donePub.publish(done);
 }
 
 void dumpTree(const std_msgs::Int32::ConstPtr& pp2){
@@ -198,6 +210,11 @@ void activacionTree(const std_msgs::Int32::ConstPtr& pp)
 	    ss << "FAILURE";
 	    msg.data = ss.str();
 	    treePub.publish(msg);
+
+        reset.data = false;
+        observerPub.publish(reset);
+        dataPub.publish(reset);
+
     }
     else{
 
@@ -205,6 +222,10 @@ void activacionTree(const std_msgs::Int32::ConstPtr& pp)
 	    ss << "SUCCESS";
 	    msg.data = ss.str();
 	    treePub.publish(msg);
+
+        reset.data = true;
+        observerPub.publish(reset);
+        dataPub.publish(reset);
     }
 }
 
@@ -229,6 +250,9 @@ int main(int argc, char** argv)
 	talkPub = nh.advertise<std_msgs::String>("/msg_to_say", fr);
 	treePub = nh.advertise<std_msgs::String>("/status_data", fr);
     dumpPub = nh.advertise<std_msgs::String>("/status_dump", fr);
+    observerPub = nh.advertise<std_msgs::Bool>("/reset_observador", fr);
+    donePub = nh.advertise<std_msgs::Bool>("/reset_dump", fr);
+    dataPub = nh.advertise<std_msgs::Bool>("/reset_data", fr);
 
 	ros::Subscriber colorSub = nh.subscribe<geometry_msgs::Pose2D>("/person_data", fr, personReceived);
 	ros::Subscriber listenerSub = nh.subscribe<std_msgs::String>("/info_received", fr, voiceReceived);

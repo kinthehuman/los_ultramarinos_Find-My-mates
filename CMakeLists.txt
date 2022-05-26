@@ -69,6 +69,10 @@ add_library(Navegar3 SHARED src/behavior_tree_nodes/Navegar3.cpp)
 add_library(Observar SHARED src/behavior_tree_nodes/Observar.cpp)
 add_library(DataCheck SHARED src/behavior_tree_nodes/DataCheck.cpp)
 add_library(DataDump SHARED src/behavior_tree_nodes/DataDump.cpp)
+add_library(ControlDump SHARED src/behavior_tree_nodes/ControlDump.cpp)
+add_library(ControlData SHARED src/behavior_tree_nodes/ControlData.cpp)
+add_library(ControlObservador SHARED src/behavior_tree_nodes/ControlObservador.cpp)
+
 
 
 add_dependencies(find_my_mates ${catkin_EXPORTED_TARGETS} sound_play_generate_messages_cpp)
@@ -137,6 +141,9 @@ list(APPEND plugin_libs
   Observar
   DataCheck
   DataDump
+  ControlData
+  ControlDump
+  ControlObservador
 )
 
 foreach(bt_plugin ${plugin_libs})
