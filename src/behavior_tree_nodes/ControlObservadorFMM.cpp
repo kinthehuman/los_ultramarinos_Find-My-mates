@@ -14,24 +14,24 @@
 
 #include <string>
 
-#include "behavior_tree/ControlData.h"
+#include "behavior_tree/ControlObservadorFMM.h"
 
 namespace behavior_trees
 {
 
-ControlData::ControlData(const std::string& name , const BT::NodeConfiguration & config):
+ControlObservador::ControlObservador(const std::string& name , const BT::NodeConfiguration & config):
 BT::ActionNodeBase(name, config), nh_(), feedBack(" ")
 {
-  sub = nh_.subscribe<std_msgs::Bool>("/reset_data", 10, &ControlData::messageCallback, this);
+  sub = nh_.subscribe<std_msgs::Bool>("/reset_observador", 10, &ControlObservador::messageCallback, this);
 }
 
-void ControlData::messageCallback(const std_msgs::Bool::ConstPtr& msg)
+void ControlObservador::messageCallback(const std_msgs::Bool::ConstPtr& msg)
 {
   feedBack = msg->data;
   std::cout << msg->data;
 }
 
-void ControlData::halt()
+void ControlObservador::halt()
 {
   //ROS_INFO("Seguir halt");
   //std_msgs::Bool act;
@@ -39,7 +39,7 @@ void ControlData::halt()
   //activador.publish(act);
 }
 
-BT::NodeStatus ControlData::tick()
+BT::NodeStatus ControlObservador::tick()
 {
 
   if (!feedBack)
@@ -57,5 +57,5 @@ BT::NodeStatus ControlData::tick()
 
 BT_REGISTER_NODES(factory)
 {
-  factory.registerNodeType<behavior_trees::ControlData>("ControlData");
+  factory.registerNodeType<behavior_trees::ControlObservador>("ControlObservador");
 }

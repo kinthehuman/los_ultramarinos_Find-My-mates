@@ -16,7 +16,7 @@
 #define ROBOCUP_HOME_EDUCATION_MONOLOGODF_H
 
 #include <string>
-#include "DialogInterface.h"
+#include "DialogInterfaceFMM.h"
 #include "find_my_mates/Info.h"
 #include "std_msgs/Int32.h"
 

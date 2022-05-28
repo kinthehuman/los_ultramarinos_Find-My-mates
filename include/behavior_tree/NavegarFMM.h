@@ -12,14 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef BEHAVIOR_TREES_DATACHECK_H
-#define BEHAVIOR_TREES_DATACHECK_H
+#ifndef BEHAVIOR_TREES_NAVEGARFMM_H
+#define BEHAVIOR_TREES_NAVEGARFMM_H
 
 #include "behaviortree_cpp_v3/behavior_tree.h"
 #include "behaviortree_cpp_v3/bt_factory.h"
 #include "geometry_msgs/Twist.h"
-#include "std_msgs/Int32.h"
+#include "std_msgs/Bool.h"
 #include "std_msgs/String.h"
+#include "geometry_msgs/PoseStamped.h"
+#include "move_base_msgs/MoveBaseActionResult.h"
+
 
 #include <string>
 #include "ros/ros.h"
@@ -27,23 +30,22 @@
 namespace behavior_trees
 {
 
-class DataCheck : public BT::ActionNodeBase
+class Navegar : public BT::ActionNodeBase
 {
   public:
 
-    explicit DataCheck(const std::string& name , const BT::NodeConfiguration& config);
+    explicit Navegar(const std::string& name , const BT::NodeConfiguration& config);
 
     void halt();
 
     BT::NodeStatus tick();
 
-    void messageCallback(const std_msgs::String::ConstPtr& msg);
 
-
+    void messageCallback(const move_base_msgs::MoveBaseActionResult::ConstPtr& msg);
     
     static BT::PortsList providedPorts()
     {
-        return { BT::InputPort<std::string>("object")};
+      return { BT::InputPort<std::string>("object")};
     }
 
 
@@ -51,13 +53,15 @@ class DataCheck : public BT::ActionNodeBase
     ros::NodeHandle nh_;
     ros::Publisher activador ;
     ros::Subscriber sub ;
+    std::string feedBack = "" ;
+
     
-    std::string feedBack ;
-    int person_counter = 1;
+    ros::Time i;
+    int a = 0;
 
 
 };
 
 }  // namespace behavior_trees
 
-#endif  // BEHAVIOR_TREES_DATACHECK_H
+#endif  // BEHAVIOR_TREES_NAVEGAR_H

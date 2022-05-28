@@ -14,7 +14,7 @@
 
 #include <string>
 
-#include "behavior_tree/Navegar2.h"
+#include "behavior_tree/Navegar2FMM.h"
 
 namespace behavior_trees
 {

@@ -12,14 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef BEHAVIOR_TREES_DATADUMP_H
-#define BEHAVIOR_TREES_DATADUMP_H
+#ifndef BEHAVIOR_TREES_CONTROLDUMPFMM_H
+#define BEHAVIOR_TREES_CONTROLDUMPFMM_H
 
 #include "behaviortree_cpp_v3/behavior_tree.h"
 #include "behaviortree_cpp_v3/bt_factory.h"
 #include "geometry_msgs/Twist.h"
 #include "std_msgs/Int32.h"
 #include "std_msgs/String.h"
+#include "std_msgs/Bool.h"
 
 #include <string>
 #include "ros/ros.h"
@@ -27,17 +28,17 @@
 namespace behavior_trees
 {
 
-class DataDump : public BT::ActionNodeBase
+class ControlDump : public BT::ActionNodeBase
 {
   public:
 
-    explicit DataDump(const std::string& name , const BT::NodeConfiguration& config);
+    explicit ControlDump(const std::string& name , const BT::NodeConfiguration& config);
 
     void halt();
 
     BT::NodeStatus tick();
 
-    void messageCallback(const std_msgs::String::ConstPtr& msg);
+    void messageCallback(const std_msgs::Bool::ConstPtr& msg);
 
 
     
@@ -49,10 +50,9 @@ class DataDump : public BT::ActionNodeBase
 
   private:
     ros::NodeHandle nh_;
-    ros::Publisher activador ;
     ros::Subscriber sub ;
     
-    std::string feedBack ;
+    bool feedBack = false;
 
 
 };

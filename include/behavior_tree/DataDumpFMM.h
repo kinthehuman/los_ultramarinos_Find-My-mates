@@ -12,16 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef BEHAVIOR_TREES_SEGUIR_H
-#define BEHAVIOR_TREES_SEGUIR_H
+#ifndef BEHAVIOR_TREES_DATADUMPFMM_H
+#define BEHAVIOR_TREES_DATADUMPFMM_H
 
 #include "behaviortree_cpp_v3/behavior_tree.h"
 #include "behaviortree_cpp_v3/bt_factory.h"
 #include "geometry_msgs/Twist.h"
-#include "std_msgs/Bool.h"
+#include "std_msgs/Int32.h"
 #include "std_msgs/String.h"
-#include "geometry_msgs/PoseStamped.h"
-#include "move_base_msgs/MoveBaseActionResult.h"
 
 #include <string>
 #include "ros/ros.h"
@@ -29,17 +27,17 @@
 namespace behavior_trees
 {
 
-class Navegar2 : public BT::ActionNodeBase
+class DataDump : public BT::ActionNodeBase
 {
   public:
 
-    explicit Navegar2(const std::string& name , const BT::NodeConfiguration& config);
+    explicit DataDump(const std::string& name , const BT::NodeConfiguration& config);
 
     void halt();
 
     BT::NodeStatus tick();
 
-    void messageCallback(const move_base_msgs::MoveBaseActionResult::ConstPtr& msg);
+    void messageCallback(const std_msgs::String::ConstPtr& msg);
 
 
     
@@ -53,14 +51,12 @@ class Navegar2 : public BT::ActionNodeBase
     ros::NodeHandle nh_;
     ros::Publisher activador ;
     ros::Subscriber sub ;
-    std::string feedBack = "" ;
     
-    ros::Time i;
-    int a = 0;
+    std::string feedBack ;
 
 
 };
 
 }  // namespace behavior_trees
 
-#endif  // BEHAVIOR_TREES_Navegar2_H
+#endif  // BEHAVIOR_TREES_DATADUMP_H

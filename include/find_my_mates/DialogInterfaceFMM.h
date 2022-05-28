@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef ROBOCUP_HOME_EDUCATION_DIALOGINTERFACE_H
-#define ROBOCUP_HOME_EDUCATION_DIALOGINTERFACE_H
+#ifndef ROBOCUP_HOME_EDUCATION_DIALOGINTERFACEFMM_H
+#define ROBOCUP_HOME_EDUCATION_DIALOGINTERFACEFMM_H
 
 #include <ros/ros.h>
 #include <string>

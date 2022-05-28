@@ -55,23 +55,22 @@ link_directories(
 add_definitions(${PCL_DEFINITIONS})
 
 add_library(find_my_mates
-  src/find_my_mates/DialogInterface.cpp
+  src/find_my_mates/DialogInterfaceFMM.cpp
 )
 
 list(APPEND plugin_libs
   
 )
 
-add_library(TextToSpeech SHARED src/behavior_tree_nodes/TextToSpeech.cpp)
-add_library(Navegar SHARED src/behavior_tree_nodes/Navegar.cpp)
-add_library(Navegar2 SHARED src/behavior_tree_nodes/Navegar2.cpp)
-add_library(Navegar3 SHARED src/behavior_tree_nodes/Navegar3.cpp)
-add_library(Observar SHARED src/behavior_tree_nodes/Observar.cpp)
-add_library(DataCheck SHARED src/behavior_tree_nodes/DataCheck.cpp)
-add_library(DataDump SHARED src/behavior_tree_nodes/DataDump.cpp)
-add_library(ControlDump SHARED src/behavior_tree_nodes/ControlDump.cpp)
-add_library(ControlData SHARED src/behavior_tree_nodes/ControlData.cpp)
-add_library(ControlObservador SHARED src/behavior_tree_nodes/ControlObservador.cpp)
+add_library(NavegarFMM SHARED src/behavior_tree_nodes/NavegarFMM.cpp)
+add_library(Navegar2FMM SHARED src/behavior_tree_nodes/Navegar2FMM.cpp)
+add_library(Navegar3FMM SHARED src/behavior_tree_nodes/Navegar3FMM.cpp)
+add_library(ObservarFMM SHARED src/behavior_tree_nodes/ObservarFMM.cpp)
+add_library(DataCheckFMM SHARED src/behavior_tree_nodes/DataCheckFMM.cpp)
+add_library(DataDumpFMM SHARED src/behavior_tree_nodes/DataDumpFMM.cpp)
+add_library(ControlDumpFMM SHARED src/behavior_tree_nodes/ControlDumpFMM.cpp)
+add_library(ControlDataFMM SHARED src/behavior_tree_nodes/ControlDataFMM.cpp)
+add_library(ControlObservadorFMM SHARED src/behavior_tree_nodes/ControlObservadorFMM.cpp)
 
 
 
@@ -87,16 +86,22 @@ target_link_libraries(find_my_mates ${catkin_LIBRARIES})
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
 
-add_executable(ObservadorPersonas_rc src/find_my_mates/ObservadorPersonas.cpp)
-add_executable( data_collector src/find_my_mates/data_collector.cpp )
-add_executable( Find_My_Mates src/Find_My_Mates.cpp )
+add_executable(ObservadorPersonasFMM src/find_my_mates/ObservadorPersonasFMM.cpp)
+add_executable(data_collectorFMM src/find_my_mates/data_collectorFMM.cpp)
+add_executable(TextToSpeechFMM src/find_my_mates/TextToSpeechFMM.cpp)
+add_executable(Find_My_Mates src/Find_My_Mates.cpp)
 
-target_link_libraries( ObservadorPersonas_rc
+target_link_libraries( ObservadorPersonasFMM
 ${catkin_LIBRARIES}
 )
 
-target_link_libraries( data_collector
+target_link_libraries( data_collectorFMM
 ${catkin_LIBRARIES}
+)
+
+target_link_libraries( TextToSpeechFMM
+${catkin_LIBRARIES}
+${PROJECT_NAME}
 )
 
 target_link_libraries( Find_My_Mates
@@ -134,16 +139,15 @@ target_link_libraries(Monologo_node ${catkin_LIBRARIES} find_my_mates ${ZMQ_LIBR
 
 
 list(APPEND plugin_libs
-  TextToSpeech
-  Navegar
-  Navegar2
-  Navegar3
-  Observar
-  DataCheck
-  DataDump
-  ControlData
-  ControlDump
-  ControlObservador
+  NavegarFMM
+  Navegar2FMM
+  Navegar3FMM
+  ObservarFMM
+  DataCheckFMM
+  DataDumpFMM
+  ControlDataFMM
+  ControlDumpFMM
+  ControlObservadorFMM
 )
 
 foreach(bt_plugin ${plugin_libs})

@@ -12,14 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef BEHAVIOR_TREE_OBSERVAR_H
-#define BEHAVIOR_TREE_OBSERVAR_H
+#ifndef BEHAVIOR_TREES_CONTROLDATAFMM_H
+#define BEHAVIOR_TREES_CONTROLDATAFMM_H
 
 #include "behaviortree_cpp_v3/behavior_tree.h"
 #include "behaviortree_cpp_v3/bt_factory.h"
 #include "geometry_msgs/Twist.h"
-#include "std_msgs/Bool.h"
+#include "std_msgs/Int32.h"
 #include "std_msgs/String.h"
+#include "std_msgs/Bool.h"
 
 #include <string>
 #include "ros/ros.h"
@@ -27,17 +28,17 @@
 namespace behavior_trees
 {
 
-class Observar : public BT::ActionNodeBase
+class ControlData : public BT::ActionNodeBase
 {
   public:
 
-    explicit Observar(const std::string& name , const BT::NodeConfiguration& config);
+    explicit ControlData(const std::string& name , const BT::NodeConfiguration& config);
 
     void halt();
 
     BT::NodeStatus tick();
 
-    void messageCallback(const std_msgs::String::ConstPtr& msg);
+    void messageCallback(const std_msgs::Bool::ConstPtr& msg);
 
 
     
@@ -49,15 +50,13 @@ class Observar : public BT::ActionNodeBase
 
   private:
     ros::NodeHandle nh_;
-    ros::Publisher activador ;
     ros::Subscriber sub ;
     
-    std::string feedBack;
-    int failures;
+    bool feedBack = false;
 
 
 };
 
 }  // namespace behavior_trees
 
-#endif  // BEHAVIOR_TREES_OBSERVAR_H
+#endif  // BEHAVIOR_TREES_DATADUMP_H

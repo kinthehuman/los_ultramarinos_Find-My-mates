@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef BEHAVIOR_TREES_CONTROLDUMP_H
-#define BEHAVIOR_TREES_CONTROLDUMP_H
+#ifndef BEHAVIOR_TREES_CONTROLOBSERVADORFMM_H
+#define BEHAVIOR_TREES_CONTROLOBSERVADORFMM_H
 
 #include "behaviortree_cpp_v3/behavior_tree.h"
 #include "behaviortree_cpp_v3/bt_factory.h"
@@ -28,11 +28,11 @@
 namespace behavior_trees
 {
 
-class ControlDump : public BT::ActionNodeBase
+class ControlObservador : public BT::ActionNodeBase
 {
   public:
 
-    explicit ControlDump(const std::string& name , const BT::NodeConfiguration& config);
+    explicit ControlObservador(const std::string& name , const BT::NodeConfiguration& config);
 
     void halt();
 
@@ -50,6 +50,7 @@ class ControlDump : public BT::ActionNodeBase
 
   private:
     ros::NodeHandle nh_;
+    ros::Publisher activador ;
     ros::Subscriber sub ;
     
     bool feedBack = false;

@@ -14,24 +14,25 @@
 
 #include <string>
 
-#include "behavior_tree/ControlDump.h"
+#include "behavior_tree/DataCheckFMM.h"
 
 namespace behavior_trees
 {
 
-ControlDump::ControlDump(const std::string& name , const BT::NodeConfiguration & config):
+DataCheck::DataCheck(const std::string& name , const BT::NodeConfiguration & config):
 BT::ActionNodeBase(name, config), nh_(), feedBack(" ")
 {
-  sub = nh_.subscribe<std_msgs::Bool>("/reset_dump", 10, &ControlDump::messageCallback, this);
+  activador = nh_.advertise<std_msgs::Int32>("/control_data", 10);
+  sub = nh_.subscribe<std_msgs::String>("/status_data", 10, &DataCheck::messageCallback, this);
 }
 
-void ControlDump::messageCallback(const std_msgs::Bool::ConstPtr& msg)
+void DataCheck::messageCallback(const std_msgs::String::ConstPtr& msg)
 {
   feedBack = msg->data;
   std::cout << msg->data;
 }
 
-void ControlDump::halt()
+void DataCheck::halt()
 {
   //ROS_INFO("Seguir halt");
   //std_msgs::Bool act;
@@ -39,17 +40,28 @@ void ControlDump::halt()
   //activador.publish(act);
 }
 
-BT::NodeStatus ControlDump::tick()
+BT::NodeStatus DataCheck::tick()
 {
+  
+  std_msgs::Int32 person;
+  person.data = person_counter;
+  activador.publish(person);
 
-  if (!feedBack)
+  if (feedBack == "FAILURE")
   {
     return BT::NodeStatus::FAILURE;
+    person_counter++;
   }
 
-  else
+  if (feedBack == "SUCCESS")
   {
     return BT::NodeStatus::SUCCESS;
+    //person_counter++;
+  }
+  if (feedBack == "RUNNING")
+  {
+    return BT::NodeStatus::RUNNING;
+    //person_counter++;
   }
 }
 }  // namespace behavior_trees
@@ -57,5 +69,5 @@ BT::NodeStatus ControlDump::tick()
 
 BT_REGISTER_NODES(factory)
 {
-  factory.registerNodeType<behavior_trees::ControlDump>("ControlDump");
+  factory.registerNodeType<behavior_trees::DataCheck>("DataCheck");
 }

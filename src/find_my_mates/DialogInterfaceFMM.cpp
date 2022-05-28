@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <find_my_mates/DialogInterface.h>
+#include "find_my_mates/DialogInterfaceFMM.h"
 
 #include <string>
 #include <utility>
