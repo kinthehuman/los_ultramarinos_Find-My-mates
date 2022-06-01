@@ -1,0 +1,14 @@
+<launch>
+  <arg name="config_file" default="$(find dialogflow_ros)/config/params.yaml"/>
+  <arg name="google_application_credentials" default="$(env HOME)/df_arq_soft.json"/>
+
+  <node name="soundplay_node" pkg="sound_play" type="soundplay_node.py" output="screen"/>
+  
+  <include file="$(find dialogflow_ros)/launch/dialogflow.launch" >
+    <arg name="google_application_credentials" value="$(arg google_application_credentials)"/>
+    <arg name="config_file" value="$(arg config_file)"/>
+  </include>
+  <node pkg="find_my_mates" type="TextToSpeechFMM" name="TextToSpeechFMM" output="screen"/>
+  <node pkg="find_my_mates" type="ObservadorPersonasFMM" name="ObservadorPersonasFMM" output="screen"/>
+  <node pkg="find_my_mates" type="data_collectorFMM" name="data_collectorFMM" output="screen"/>
+</launch>

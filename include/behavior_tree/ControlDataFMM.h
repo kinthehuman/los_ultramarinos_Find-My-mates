@@ -28,11 +28,11 @@
 namespace behavior_trees
 {
 
-class ControlData : public BT::ActionNodeBase
+class ControlDataFMM : public BT::ActionNodeBase
 {
   public:
 
-    explicit ControlData(const std::string& name , const BT::NodeConfiguration& config);
+    explicit ControlDataFMM(const std::string& name , const BT::NodeConfiguration& config);
 
     void halt();
 
@@ -52,7 +52,7 @@ class ControlData : public BT::ActionNodeBase
     ros::NodeHandle nh_;
     ros::Subscriber sub ;
     
-    bool feedBack = false;
+    bool feedBack = true;
 
 
 };

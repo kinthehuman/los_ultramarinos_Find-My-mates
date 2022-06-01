@@ -31,15 +31,20 @@ int main(int argc, char **argv)
   BT::BehaviorTreeFactory factory;
   BT::SharedLibrary loader;
 
-  factory.registerFromPlugin(loader.getOSName("TextToSpeech"));
-  factory.registerFromPlugin(loader.getOSName("Observar"));
-  factory.registerFromPlugin(loader.getOSName("DataCheck"));
-  factory.registerFromPlugin(loader.getOSName("DataDump"));
-  factory.registerFromPlugin(loader.getOSName("Navegar3"));
+  factory.registerFromPlugin(loader.getOSName("ObservarFMM"));
+  factory.registerFromPlugin(loader.getOSName("DataCheckFMM"));
+  factory.registerFromPlugin(loader.getOSName("DataDumpFMM"));
+  factory.registerFromPlugin(loader.getOSName("Navegar3FMM"));
+  factory.registerFromPlugin(loader.getOSName("Navegar2FMM"));
+  factory.registerFromPlugin(loader.getOSName("ControlDataFMM"));
+  factory.registerFromPlugin(loader.getOSName("ControlDumpFMM"));
+  factory.registerFromPlugin(loader.getOSName("ControlObservadorFMM"));
+
+
 
   auto blackboard = BT::Blackboard::create();
 
-  std::string pkgpath = ros::package::getPath("robocup_home_education_los_ultramarinos");
+  std::string pkgpath = ros::package::getPath("find_my_mates");
   std::string xml_file = pkgpath + "/behavior_trees_xml/find_my_mates.xml";
 
   BT::Tree tree = factory.createTreeFromFile(xml_file);

@@ -39,7 +39,7 @@ class MonologoDF: public DialogInterface
       this->registerCallback(std::bind(&MonologoDF::emptyIntentCB, this, ph::_1), "Empty");
 
       stop_pub = nh_.advertise<std_msgs::Int32>("/stop_received", 1);
-      info_pub = nh_.advertise<find_my_mates::Info>("/info_received", 1);
+      info_pub = nh_.advertise<std_msgs::String>("/info_received", 1);
       std_msgs::Int32 msg;
       msg.data = 0;
       stop_pub.publish(msg);
@@ -111,7 +111,7 @@ class MonologoDF: public DialogInterface
       ROS_INFO("welcomeIntentCB: %s\n", result.fulfillment_text.c_str());
       speak(result.fulfillment_text);
 
-      std::string state = "", person = "", object = "";
+      std::string state = "", person = "";
 
       for (const auto & param : result.parameters)
       {
@@ -125,16 +125,10 @@ class MonologoDF: public DialogInterface
             std::cout << "\t" << param.value[0] << std::endl;
             person = param.value[0];
         }
-        if (param.param_name == "any")
-        {
-            std::cout << "\t" << param.value[0] << std::endl;
-            object = param.value[0];
-        }
       }
-      find_my_mates::Info msg;
-      msg.person = person;
-      msg.object = object;
-      if (person != "" and object != "")
+      std_msgs::String msg;
+      msg.data = person;
+      if (person != "")
       {
         disableListen();
         info_pub.publish(msg);

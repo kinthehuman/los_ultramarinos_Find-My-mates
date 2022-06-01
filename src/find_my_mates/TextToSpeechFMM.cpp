@@ -54,7 +54,6 @@ void messageToSayCallback(const std_msgs::String::ConstPtr& msg)
 
 int main(int argc, char** argv)
 {
-
 	ros::init(argc, argv, "TextToSpeech");
 
 	ros::NodeHandle nh;
@@ -101,6 +100,5 @@ int main(int argc, char** argv)
 
   ros::spinOnce();
   loop_rate.sleep();
-
   }
 }

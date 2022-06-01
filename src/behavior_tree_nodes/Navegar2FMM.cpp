@@ -18,29 +18,29 @@
 
 namespace behavior_trees
 {
-Navegar2::Navegar2(const std::string& name, const BT::NodeConfiguration & config):
+Navegar2FMM::Navegar2FMM(const std::string& name, const BT::NodeConfiguration & config):
 BT::ActionNodeBase(name, config), nh_(), feedBack(" ")
 {
   activador = nh_.advertise<geometry_msgs::PoseStamped>("move_base_simple/goal", 10);
-  sub = nh_.subscribe("/move_base/result", 10, &Navegar2::messageCallback, this);
+  sub = nh_.subscribe("/move_base/result", 10, &Navegar2FMM::messageCallback, this);
 }
 
-void Navegar2::messageCallback(const move_base_msgs::MoveBaseActionResult::ConstPtr& msg)
+void Navegar2FMM::messageCallback(const move_base_msgs::MoveBaseActionResult::ConstPtr& msg)
 {
   feedBack = msg->status.text;
   std::cout << "Resultado Navegacion : " << feedBack << "\n";
 }
 
-void Navegar2::halt()
+void Navegar2FMM::halt()
 {
   ROS_INFO("Seguir halt");
 }
 
-BT::NodeStatus Navegar2::tick()
+BT::NodeStatus Navegar2FMM::tick()
 {
   if (a == 5)
   {
-    std::cout << a << "\n";
+    std::cout << "Navegando a arbitro" << "\n";
 
     geometry_msgs::PoseStamped msg;
 
@@ -78,5 +78,5 @@ BT::NodeStatus Navegar2::tick()
 
 BT_REGISTER_NODES(factory)
 {
-  factory.registerNodeType<behavior_trees::Navegar2>("Navegar2");
+  factory.registerNodeType<behavior_trees::Navegar2FMM>("Navegar2FMM");
 }

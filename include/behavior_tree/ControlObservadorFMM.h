@@ -28,11 +28,11 @@
 namespace behavior_trees
 {
 
-class ControlObservador : public BT::ActionNodeBase
+class ControlObservadorFMM : public BT::ActionNodeBase
 {
   public:
 
-    explicit ControlObservador(const std::string& name , const BT::NodeConfiguration& config);
+    explicit ControlObservadorFMM(const std::string& name , const BT::NodeConfiguration& config);
 
     void halt();
 

@@ -19,45 +19,68 @@
 
 namespace behavior_trees
 {
-Navegar3::Navegar3(const std::string& name, const BT::NodeConfiguration & config):
+Navegar3FMM::Navegar3FMM(const std::string& name, const BT::NodeConfiguration & config):
 BT::ActionNodeBase(name, config), nh_(), feedBack(" ")
 {
   activador = nh_.advertise<geometry_msgs::PoseStamped>("move_base_simple/goal", 10);
-  sub = nh_.subscribe("/move_base/result", 10, &Navegar3::messageCallback, this);
+  sub = nh_.subscribe("/move_base/result", 10, &Navegar3FMM::messageCallback, this);
+
+     //P1
+    positions[0].header.stamp = i;
+    positions[0].header.frame_id = "map";
+
+    positions[0].pose.position.x = 5;
+    positions[0].pose.position.y = 0;
+    positions[0].pose.orientation.x = 0;
+    positions[0].pose.orientation.y = 0;
+    positions[0].pose.orientation.z = 0;
+    positions[0].pose.orientation.w = 1;
+
+
+    //P2
+    positions[1].header.stamp = i;
+    positions[1].header.frame_id = "map";
+
+    positions[1].pose.position.x = 6.8;
+    positions[1].pose.position.y = 4;
+
+    positions[1].pose.orientation.x = 0;
+    positions[1].pose.orientation.y = 0;
+    positions[1].pose.orientation.z = 0.382;
+    positions[1].pose.orientation.w = 0.923;
+
+     //P3
+    positions[2].header.stamp = i;
+    positions[2].header.frame_id = "map";
+
+    positions[2].pose.position.x = 1.3;
+    positions[2].pose.position.y = 6;
+    positions[2].pose.orientation.x = 0;
+    positions[2].pose.orientation.y = 0;
+    positions[2].pose.orientation.z = 0.707;
+    positions[2].pose.orientation.w = 0.707;
+
 }
 
-void Navegar3::messageCallback(const move_base_msgs::MoveBaseActionResult::ConstPtr& msg)
+void Navegar3FMM::messageCallback(const move_base_msgs::MoveBaseActionResult::ConstPtr& msg)
 {
   feedBack = msg->status.text;
   std::cout << "Resultado Navegacion : " << feedBack << "\n";
 }
 
-void Navegar3::halt()
+void Navegar3FMM::halt()
 {
   ROS_INFO("Seguir halt");
 }
 
-BT::NodeStatus Navegar3::tick()
+BT::NodeStatus Navegar3FMM::tick()
 {
   if (a == 5)
   {
-    std::cout << a << "\n";
+    std::cout << "Navegando a posicion " << counter << "\n";
 
     geometry_msgs::PoseStamped msg;
     msg = positions[counter];
-
-    //msg.header.stamp = i;
-    //msg.header.frame_id = "map";
-
-    //msg.pose.position.x = 0.0;
-   // msg.pose.position.y = 0.0;
-    //msg.pose.position.z = 0.0;
-
-   // msg.pose.orientation.x = 0.0;
-   // msg.pose.orientation.y = 0.0;
-   // msg.pose.orientation.z = 0.0;
-   // msg.pose.orientation.w = 1.0;
-
     activador.publish(msg);
   }
   a++;
@@ -82,5 +105,5 @@ BT::NodeStatus Navegar3::tick()
 
 BT_REGISTER_NODES(factory)
 {
-  factory.registerNodeType<behavior_trees::Navegar3>("Navegar3");
+  factory.registerNodeType<behavior_trees::Navegar3FMM>("Navegar3FMM");
 }

@@ -28,11 +28,11 @@
 namespace behavior_trees
 {
 
-class ControlDump : public BT::ActionNodeBase
+class ControlDumpFMM : public BT::ActionNodeBase
 {
   public:
 
-    explicit ControlDump(const std::string& name , const BT::NodeConfiguration& config);
+    explicit ControlDumpFMM(const std::string& name , const BT::NodeConfiguration& config);
 
     void halt();
 

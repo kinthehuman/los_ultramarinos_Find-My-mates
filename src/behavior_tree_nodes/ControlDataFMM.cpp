@@ -19,19 +19,19 @@
 namespace behavior_trees
 {
 
-ControlData::ControlData(const std::string& name , const BT::NodeConfiguration & config):
+ControlDataFMM::ControlDataFMM(const std::string& name , const BT::NodeConfiguration & config):
 BT::ActionNodeBase(name, config), nh_(), feedBack(" ")
 {
-  sub = nh_.subscribe<std_msgs::Bool>("/reset_data", 10, &ControlData::messageCallback, this);
+  sub = nh_.subscribe<std_msgs::Bool>("/reset_data", 10, &ControlDataFMM::messageCallback, this);
 }
 
-void ControlData::messageCallback(const std_msgs::Bool::ConstPtr& msg)
+void ControlDataFMM::messageCallback(const std_msgs::Bool::ConstPtr& msg)
 {
   feedBack = msg->data;
   std::cout << msg->data;
 }
 
-void ControlData::halt()
+void ControlDataFMM::halt()
 {
   //ROS_INFO("Seguir halt");
   //std_msgs::Bool act;
@@ -39,16 +39,19 @@ void ControlData::halt()
   //activador.publish(act);
 }
 
-BT::NodeStatus ControlData::tick()
+BT::NodeStatus ControlDataFMM::tick()
 {
 
   if (!feedBack)
   {
+    std::cout << "Need more data";
     return BT::NodeStatus::FAILURE;
   }
 
   else
   {
+    std::cout << "Data collected";
+
     return BT::NodeStatus::SUCCESS;
   }
 }
@@ -57,5 +60,5 @@ BT::NodeStatus ControlData::tick()
 
 BT_REGISTER_NODES(factory)
 {
-  factory.registerNodeType<behavior_trees::ControlData>("ControlData");
+  factory.registerNodeType<behavior_trees::ControlDataFMM>("ControlDataFMM");
 }

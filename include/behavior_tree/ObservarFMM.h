@@ -27,11 +27,11 @@
 namespace behavior_trees
 {
 
-class Observar : public BT::ActionNodeBase
+class ObservarFMM : public BT::ActionNodeBase
 {
   public:
 
-    explicit Observar(const std::string& name , const BT::NodeConfiguration& config);
+    explicit ObservarFMM(const std::string& name , const BT::NodeConfiguration& config);
 
     void halt();
 

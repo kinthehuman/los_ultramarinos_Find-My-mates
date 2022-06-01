@@ -29,11 +29,11 @@
 namespace behavior_trees
 {
 
-class Navegar3 : public BT::ActionNodeBase
+class Navegar3FMM : public BT::ActionNodeBase
 {
   public:
 
-    explicit Navegar3(const std::string& name , const BT::NodeConfiguration& config);
+    explicit Navegar3FMM(const std::string& name , const BT::NodeConfiguration& config);
 
     void halt();
 
@@ -55,10 +55,10 @@ class Navegar3 : public BT::ActionNodeBase
     ros::Subscriber sub ;
     std::string feedBack = "" ;
     
-    ros::Time time;
+    ros::Time i;
     int a = 0;
 
-    geometry_msgs::PoseStamped positions[7];
+    geometry_msgs::PoseStamped positions[3];
     int counter = 0;
 
 

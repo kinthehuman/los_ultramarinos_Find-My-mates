@@ -19,19 +19,19 @@
 namespace behavior_trees
 {
 
-ControlObservador::ControlObservador(const std::string& name , const BT::NodeConfiguration & config):
+ControlObservadorFMM::ControlObservadorFMM(const std::string& name , const BT::NodeConfiguration & config):
 BT::ActionNodeBase(name, config), nh_(), feedBack(" ")
 {
-  sub = nh_.subscribe<std_msgs::Bool>("/reset_observador", 10, &ControlObservador::messageCallback, this);
+  sub = nh_.subscribe<std_msgs::Bool>("/reset_observador", 10, &ControlObservadorFMM::messageCallback, this);
 }
 
-void ControlObservador::messageCallback(const std_msgs::Bool::ConstPtr& msg)
+void ControlObservadorFMM::messageCallback(const std_msgs::Bool::ConstPtr& msg)
 {
   feedBack = msg->data;
   std::cout << msg->data;
 }
 
-void ControlObservador::halt()
+void ControlObservadorFMM::halt()
 {
   //ROS_INFO("Seguir halt");
   //std_msgs::Bool act;
@@ -39,7 +39,7 @@ void ControlObservador::halt()
   //activador.publish(act);
 }
 
-BT::NodeStatus ControlObservador::tick()
+BT::NodeStatus ControlObservadorFMM::tick()
 {
 
   if (!feedBack)
@@ -57,5 +57,5 @@ BT::NodeStatus ControlObservador::tick()
 
 BT_REGISTER_NODES(factory)
 {
-  factory.registerNodeType<behavior_trees::ControlObservador>("ControlObservador");
+  factory.registerNodeType<behavior_trees::ControlObservadorFMM>("ControlObservadorFMM");
 }

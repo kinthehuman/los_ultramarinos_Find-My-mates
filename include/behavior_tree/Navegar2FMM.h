@@ -29,11 +29,11 @@
 namespace behavior_trees
 {
 
-class Navegar2 : public BT::ActionNodeBase
+class Navegar2FMM : public BT::ActionNodeBase
 {
   public:
 
-    explicit Navegar2(const std::string& name , const BT::NodeConfiguration& config);
+    explicit Navegar2FMM(const std::string& name , const BT::NodeConfiguration& config);
 
     void halt();
 

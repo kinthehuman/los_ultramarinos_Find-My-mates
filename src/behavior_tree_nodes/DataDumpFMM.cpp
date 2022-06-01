@@ -19,20 +19,20 @@
 namespace behavior_trees
 {
 
-DataDump::DataDump(const std::string& name , const BT::NodeConfiguration & config):
+DataDumpFMM::DataDumpFMM(const std::string& name , const BT::NodeConfiguration & config):
 BT::ActionNodeBase(name, config), nh_(), feedBack(" ")
 {
   activador = nh_.advertise<std_msgs::Int32>("/data_dump", 10);
-  sub = nh_.subscribe<std_msgs::String>("/status_dump", 10, &DataDump::messageCallback, this);
+  sub = nh_.subscribe<std_msgs::String>("/status_dump", 10, &DataDumpFMM::messageCallback, this);
 }
 
-void DataDump::messageCallback(const std_msgs::String::ConstPtr& msg)
+void DataDumpFMM::messageCallback(const std_msgs::String::ConstPtr& msg)
 {
   feedBack = msg->data;
   std::cout << msg->data;
 }
 
-void DataDump::halt()
+void DataDumpFMM::halt()
 {
   //ROS_INFO("Seguir halt");
   //std_msgs::Bool act;
@@ -40,7 +40,7 @@ void DataDump::halt()
   //activador.publish(act);
 }
 
-BT::NodeStatus DataDump::tick()
+BT::NodeStatus DataDumpFMM::tick()
 {
   
   std_msgs::Int32 algo;
@@ -67,5 +67,5 @@ BT::NodeStatus DataDump::tick()
 
 BT_REGISTER_NODES(factory)
 {
-  factory.registerNodeType<behavior_trees::DataDump>("DataDump");
+  factory.registerNodeType<behavior_trees::DataDumpFMM>("DataDumpFMM");
 }

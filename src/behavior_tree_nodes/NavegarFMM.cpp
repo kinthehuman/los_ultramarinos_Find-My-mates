@@ -18,25 +18,25 @@
 
 namespace behavior_trees
 {
-Navegar::Navegar(const std::string& name, const BT::NodeConfiguration & config):
+NavegarFMM::NavegarFMM(const std::string& name, const BT::NodeConfiguration & config):
 BT::ActionNodeBase(name, config), nh_(), feedBack(" ")
 {
   activador = nh_.advertise<geometry_msgs::PoseStamped>("move_base_simple/goal", 10);
-  sub = nh_.subscribe("/move_base/result", 10, &Navegar::messageCallback, this);
+  sub = nh_.subscribe("/move_base/result", 10, &NavegarFMM::messageCallback, this);
 }
 
-void Navegar::messageCallback(const move_base_msgs::MoveBaseActionResult::ConstPtr& msg)
+void NavegarFMM::messageCallback(const move_base_msgs::MoveBaseActionResult::ConstPtr& msg)
 {
   feedBack = msg->status.text;
   std::cout << "Resultado Navegacion : " << feedBack << "\n";
 }
 
-void Navegar::halt()
+void NavegarFMM::halt()
 {
   ROS_INFO("Seguir halt");
 }
 
-BT::NodeStatus Navegar::tick()
+BT::NodeStatus NavegarFMM::tick()
 {
   if (a == 5)
   {
@@ -77,5 +77,5 @@ BT::NodeStatus Navegar::tick()
 
 BT_REGISTER_NODES(factory)
 {
-  factory.registerNodeType<behavior_trees::Navegar>("Navegar");
+  factory.registerNodeType<behavior_trees::NavegarFMM>("NavegarFMM");
 }

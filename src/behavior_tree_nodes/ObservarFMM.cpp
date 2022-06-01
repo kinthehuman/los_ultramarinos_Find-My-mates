@@ -24,16 +24,16 @@
 namespace behavior_trees
 {
 
-Observar::Observar(const std::string& name , const BT::NodeConfiguration & config): BT::ActionNodeBase(name, config),nh_(),feedBack(" ")
+ObservarFMM::ObservarFMM(const std::string& name , const BT::NodeConfiguration & config): BT::ActionNodeBase(name, config),nh_(),feedBack(" ")
 {   
   activador = nh_.advertise<std_msgs::Bool>("/control_observador",10);
-  sub = nh_.subscribe<std_msgs::String>("/status_observador", 10, &Observar::messageCallback, this); 
+  sub = nh_.subscribe<std_msgs::String>("/status_observador", 10, &ObservarFMM::messageCallback, this); 
   failures = 0;
 }
 
 
 void
-Observar::messageCallback(const std_msgs::String::ConstPtr& msg)
+ObservarFMM::messageCallback(const std_msgs::String::ConstPtr& msg)
 {
   feedBack = msg->data ;
   std::cout << msg->data;
@@ -41,13 +41,13 @@ Observar::messageCallback(const std_msgs::String::ConstPtr& msg)
 
 
 void
-Observar::halt()
+ObservarFMM::halt()
 {
   ROS_INFO("Observar halt");
 }
 
 BT::NodeStatus
-Observar::tick()
+ObservarFMM::tick()
 {
 
   std_msgs::Bool act ;
@@ -85,5 +85,5 @@ Observar::tick()
 
 BT_REGISTER_NODES(factory)
 {
-  factory.registerNodeType<behavior_trees::Observar>("Observar");
+  factory.registerNodeType<behavior_trees::ObservarFMM>("ObservarFMM");
 }
