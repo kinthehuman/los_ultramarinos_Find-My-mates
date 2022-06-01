@@ -23,6 +23,7 @@ Navegar3FMM::Navegar3FMM(const std::string& name, const BT::NodeConfiguration & 
 BT::ActionNodeBase(name, config), nh_(), feedBack(" ")
 {
   activador = nh_.advertise<geometry_msgs::PoseStamped>("move_base_simple/goal", 10);
+  resetPub = nh_.advertise<std_msgs::Bool>("/reset_data", 10);
   sub = nh_.subscribe("/move_base/result", 10, &Navegar3FMM::messageCallback, this);
 
      //P1
@@ -80,6 +81,13 @@ BT::NodeStatus Navegar3FMM::tick()
     std::cout << "Navegando a posicion " << counter << "\n";
 
     geometry_msgs::PoseStamped msg;
+    all = counter == size;
+    if (all){
+      reset.data = false;
+      resetPub.publish(reset);
+      return BT::NodeStatus::SUCCESS;
+
+    }
     msg = positions[counter];
     activador.publish(msg);
   }

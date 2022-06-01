@@ -20,7 +20,7 @@ namespace behavior_trees
 {
 
 ControlDumpFMM::ControlDumpFMM(const std::string& name , const BT::NodeConfiguration & config):
-BT::ActionNodeBase(name, config), nh_(), feedBack(" ")
+BT::ActionNodeBase(name, config), nh_(), feedBack(true)
 {
   sub = nh_.subscribe<std_msgs::Bool>("/reset_dump", 10, &ControlDumpFMM::messageCallback, this);
 }

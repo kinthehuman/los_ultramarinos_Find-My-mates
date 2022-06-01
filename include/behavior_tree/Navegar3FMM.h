@@ -53,13 +53,16 @@ class Navegar3FMM : public BT::ActionNodeBase
     ros::NodeHandle nh_;
     ros::Publisher activador ;
     ros::Subscriber sub ;
+    ros::Publisher resetPub;
     std::string feedBack = "" ;
     
     ros::Time i;
     int a = 0;
-
+    int size = 3;
     geometry_msgs::PoseStamped positions[3];
     int counter = 0;
+    std_msgs::Bool reset;
+    bool all;
 
 
 };
