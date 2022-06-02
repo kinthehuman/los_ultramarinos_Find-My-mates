@@ -203,7 +203,7 @@ void activacionTree(const std_msgs::Int32::ConstPtr& pp)
 	    msg.data = ss.str();
 	    treePub.publish(msg);
     }
-    else if (people_counter < 1){
+    else if (people_counter < 2){
 
         //talk(talkPub, people, people_counter);
         std::stringstream ss;
@@ -211,10 +211,9 @@ void activacionTree(const std_msgs::Int32::ConstPtr& pp)
 	    msg.data = ss.str();
 	    treePub.publish(msg);
 
-        reset.data = false;
+        reset.data = true;
         observerPub.publish(reset);
         dataPub.publish(reset);
-
     }
     else{
 
@@ -223,7 +222,7 @@ void activacionTree(const std_msgs::Int32::ConstPtr& pp)
 	    msg.data = ss.str();
 	    treePub.publish(msg);
 
-        reset.data = true;
+        reset.data = false;
         observerPub.publish(reset);
         dataPub.publish(reset);
     }

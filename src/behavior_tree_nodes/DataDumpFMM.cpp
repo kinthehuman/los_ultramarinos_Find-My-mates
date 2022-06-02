@@ -29,7 +29,7 @@ BT::ActionNodeBase(name, config), nh_(), feedBack(" ")
 void DataDumpFMM::messageCallback(const std_msgs::String::ConstPtr& msg)
 {
   feedBack = msg->data;
-  std::cout << msg->data;
+  //std::cout << msg->data;
 }
 
 void DataDumpFMM::halt()
@@ -42,10 +42,15 @@ void DataDumpFMM::halt()
 
 BT::NodeStatus DataDumpFMM::tick()
 {
-  
+  if (a == 0){
+    feedBack = "";
+  }
+  if (a == 5){
   std_msgs::Int32 algo;
   algo.data = 1;
   activador.publish(algo);
+  }
+  a++;
 
   if (feedBack == "FAILURE")
   {

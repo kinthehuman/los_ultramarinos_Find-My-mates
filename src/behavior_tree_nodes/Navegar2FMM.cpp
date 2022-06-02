@@ -38,6 +38,9 @@ void Navegar2FMM::halt()
 
 BT::NodeStatus Navegar2FMM::tick()
 {
+  if (a == 0){
+    feedBack = "";
+  }
   if (a == 5)
   {
     std::cout << "Navegando a arbitro" << "\n";
@@ -47,7 +50,7 @@ BT::NodeStatus Navegar2FMM::tick()
     msg.header.stamp = i;
     msg.header.frame_id = "map";
 
-    msg.pose.position.x = 0.0;
+    msg.pose.position.x = 4.0;
     msg.pose.position.y = 0.0;
     msg.pose.position.z = 0.0;
 

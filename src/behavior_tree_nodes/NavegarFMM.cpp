@@ -38,6 +38,9 @@ void NavegarFMM::halt()
 
 BT::NodeStatus NavegarFMM::tick()
 {
+  if (a == 0){
+    feedBack = "";
+  }
   if (a == 5)
   {
     std::cout << a << "\n";

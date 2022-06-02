@@ -42,16 +42,13 @@ void ControlDataFMM::halt()
 BT::NodeStatus ControlDataFMM::tick()
 {
 
-  if (!feedBack)
+  if (feedBack)
   {
-    std::cout << "Need more data";
     return BT::NodeStatus::FAILURE;
   }
 
   else
   {
-    std::cout << "Data collected";
-
     return BT::NodeStatus::SUCCESS;
   }
 }

@@ -8,6 +8,6 @@
     <arg name="google_application_credentials" value="$(arg google_application_credentials)"/>
     <arg name="config_file" value="$(arg config_file)"/>
   </include>
-  <node pkg="find_my_mates" type="TextToSpeechNode" name="TextToSpeechNode" output="screen">
+  <node pkg="find_my_mates" type="TextToSpeechFMM" name="TextToSpeechFMM" output="screen">
   </node>
 </launch>

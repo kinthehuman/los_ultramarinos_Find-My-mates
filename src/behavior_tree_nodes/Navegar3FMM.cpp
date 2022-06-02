@@ -76,6 +76,11 @@ void Navegar3FMM::halt()
 
 BT::NodeStatus Navegar3FMM::tick()
 {
+
+  if (a == 0){
+    feedBack = "";
+  }
+
   if (a == 5)
   {
     std::cout << "Navegando a posicion " << counter << "\n";
@@ -85,7 +90,7 @@ BT::NodeStatus Navegar3FMM::tick()
     if (all){
       reset.data = false;
       resetPub.publish(reset);
-      return BT::NodeStatus::SUCCESS;
+      return BT::NodeStatus::FAILURE;
 
     }
     msg = positions[counter];

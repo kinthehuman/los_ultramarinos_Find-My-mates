@@ -48,8 +48,12 @@ float ymin;
 void activacionTree(const std_msgs::Bool::ConstPtr& clave)
 { 
   act = clave->data;
-  ROS_INFO("Observador Activado");
-
+  if(act){
+	  std::cout << "OBSERVADOR ACTIVADO\n";
+  }
+  else{
+	  std::cout << "OBSERVADOR DESACTIVADO\n";
+  }
 }
 
 double hacerMedia(double arr[])
@@ -109,6 +113,39 @@ void callback_bbx(const sensor_msgs::ImageConstPtr& depth, const sensor_msgs::Im
 					//pp.x = dist;
 					//float angle = (px - px_center)/(px_center);
 					//pp.y = angle;
+                    
+					// #####################CAMBIOS_JORGE##########################
+				
+					int lado = 4 ; // mitad de lado 
+
+					int x_i = px - lado ;      //      -------> X
+					int y_i = py - lado ;         //   |
+					int x_f = px + lado ;         //   |            Ejes en cv2 
+					int y_f = py + lado ;         //   | 
+                                                  //   v Y
+					float r_me = 0 ;
+					float g_me = 0 ;
+					float b_me = 0 ;
+
+					float n = ((lado )*2 +1 )*((lado )*2 +1 )  ; // numero de pixels en el area
+
+                    for(int x = x_i ; x < x_f ; x++ ){
+						for(int y = y_i ; y < y_f ;y++ ){
+
+							cv::Vec3b vector_rgb = RgbImageData->image.at<cv::Vec3b>(cv::Point(x,y)); // saca los valores rgb del pixel x,y
+                             r_me += vector_rgb[2] ;
+							 g_me += vector_rgb[1] ;
+                             b_me += vector_rgb[0] ;	
+						}
+					}
+
+                    r_me = r_me / n ;
+					g_me = g_me / n ;
+					b_me = b_me / n ;
+
+					
+                    // #######################################################
+
 					cv::Vec3b vector_rgb = RgbImageData->image.at<cv::Vec3b>(cv::Point(px,py));
 
 					R_ = vector_rgb[2];
@@ -173,10 +210,8 @@ void callback_bbx(const sensor_msgs::ImageConstPtr& depth, const sensor_msgs::Im
 				mSensorsPublisher.publish(pp);
 				objectPub.publish(object);
 
-				found.data = true;
-				controlPub.publish(found);
-
 				values_counter = 0;
+				act = false;
 			}
 		}
 		else

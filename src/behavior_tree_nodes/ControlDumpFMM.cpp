@@ -42,7 +42,7 @@ void ControlDumpFMM::halt()
 BT::NodeStatus ControlDumpFMM::tick()
 {
 
-  if (!feedBack)
+  if (feedBack)
   {
     return BT::NodeStatus::FAILURE;
   }

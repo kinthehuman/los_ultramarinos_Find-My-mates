@@ -53,6 +53,7 @@ class DataDumpFMM : public BT::ActionNodeBase
     ros::Subscriber sub ;
     
     std::string feedBack ;
+    int a = 0;
 
 
 };

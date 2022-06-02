@@ -28,7 +28,13 @@ BT::ActionNodeBase(name, config), nh_(), feedBack(true)
 void ControlObservadorFMM::messageCallback(const std_msgs::Bool::ConstPtr& msg)
 {
   feedBack = msg->data;
-  std::cout << msg->data;
+  if(feedBack){
+    std::cout << "Listo para observar \n";
+  }
+  else{
+    std::cout << "Observacion finalizada \n";
+  }
+  //std::cout << msg->data;
 }
 
 void ControlObservadorFMM::halt()
@@ -42,11 +48,10 @@ void ControlObservadorFMM::halt()
 BT::NodeStatus ControlObservadorFMM::tick()
 {
 
-  if (!feedBack)
+  if (feedBack)
   {
     return BT::NodeStatus::FAILURE;
   }
-
   else
   {
     return BT::NodeStatus::SUCCESS;

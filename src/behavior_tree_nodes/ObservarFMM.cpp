@@ -12,14 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <string>
-
 #include "behavior_tree/ObservarFMM.h"
-#include "geometry_msgs/Twist.h"
-#include "std_msgs/Bool.h"
-#include "behaviortree_cpp_v3/behavior_tree.h"
-#include "std_msgs/String.h"
-#include "ros/ros.h"
 
 namespace behavior_trees
 {
@@ -27,16 +20,17 @@ namespace behavior_trees
 ObservarFMM::ObservarFMM(const std::string& name , const BT::NodeConfiguration & config): BT::ActionNodeBase(name, config),nh_(),feedBack(" ")
 {   
   activador = nh_.advertise<std_msgs::Bool>("/control_observador",10);
-  sub = nh_.subscribe<std_msgs::String>("/status_observador", 10, &ObservarFMM::messageCallback, this); 
+  controlPub = nh_.advertise<std_msgs::Bool>("/reset_observador", 10);
+
+  sub = nh_.subscribe("/status_observador", 10, &ObservarFMM::messageCallback, this); 
   failures = 0;
 }
 
 
-void
-ObservarFMM::messageCallback(const std_msgs::String::ConstPtr& msg)
+void ObservarFMM::messageCallback(const std_msgs::String::ConstPtr& msg)
 {
-  feedBack = msg->data ;
-  std::cout << msg->data;
+  feedBack = msg->data;
+  //std::cout << msg->data;
 }
 
 
@@ -49,36 +43,42 @@ ObservarFMM::halt()
 BT::NodeStatus
 ObservarFMM::tick()
 {
-
-  std_msgs::Bool act ;
-  act.data = true ;
- 
-    activador.publish(act);
-  
-  if (feedBack == "RUNNING") {
-       
-         return BT::NodeStatus::RUNNING;
-  } 
+if (a == 0){
+  feedBack = "";
+}
+if (a == 5){
+  act.data = true;
+  std::cout << "activando observador \n";
+  activador.publish(act);
+  }
+  a++;
 
   if (feedBack == "SUCCESS") {
     act.data = false;
- 
-
-    for (int i = 0; i < 5; i++)
-      activador.publish(act);
+		controlPub.publish(act);
+    activador.publish(act);
+    failures = 0;
+    a = 0;
     return BT::NodeStatus::SUCCESS;
   }
-
-  if (feedBack == "FAILURE") {
+  else if (feedBack == "FAILURE") {
       failures++;
-      if(failures > 100){
-         return BT::NodeStatus::FAILURE;
-         failures = 0;
+      if(failures > 50){
+        act.data = false;
+        activador.publish(act);
+        failures = 0;
+        a = 0;
+        return BT::NodeStatus::FAILURE;   
         }
       else{
          return BT::NodeStatus::RUNNING;
       }
+  }
+  else{
+     return BT::NodeStatus::RUNNING;
+
   }   
+
 }
 }  // namespace behavior_trees
 

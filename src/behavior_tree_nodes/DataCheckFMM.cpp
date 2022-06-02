@@ -29,7 +29,7 @@ BT::ActionNodeBase(name, config), nh_(), feedBack(" ")
 void DataCheckFMM::messageCallback(const std_msgs::String::ConstPtr& msg)
 {
   feedBack = msg->data;
-  std::cout << msg->data;
+  //std::cout << msg->data;
 }
 
 void DataCheckFMM::halt()
@@ -42,23 +42,30 @@ void DataCheckFMM::halt()
 
 BT::NodeStatus DataCheckFMM::tick()
 {
-  
+  if (a == 0){
+    feedBack = "";
+  }
   std_msgs::Int32 person;
   person.data = person_counter;
   activador.publish(person);
+  a++;
 
   if (feedBack == "FAILURE")
   {
-    return BT::NodeStatus::FAILURE;
+    std::cout << "looking for more people \n";
     person_counter++;
+    a = 0;
+    return BT::NodeStatus::FAILURE;
   }
 
   if (feedBack == "SUCCESS")
   {
+    std::cout << "done collecting info \n";
+    a = 0;
     return BT::NodeStatus::SUCCESS;
     //person_counter++;
   }
-  if (feedBack == "RUNNING")
+  else
   {
     return BT::NodeStatus::RUNNING;
     //person_counter++;

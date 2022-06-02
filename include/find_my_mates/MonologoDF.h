@@ -39,7 +39,10 @@ class MonologoDF: public DialogInterface
       this->registerCallback(std::bind(&MonologoDF::emptyIntentCB, this, ph::_1), "Empty");
 
       stop_pub = nh_.advertise<std_msgs::Int32>("/stop_received", 1);
-      info_pub = nh_.advertise<std_msgs::String>("/info_received", 1);
+      name_pub = nh_.advertise<std_msgs::String>("/info_received", 1);
+      country_pub = nh_.advertise<std_msgs::String>("/country_received", 1);
+      last_name_pub = nh_.advertise<std_msgs::String>("/last_name_received", 1);
+      
       std_msgs::Int32 msg;
       msg.data = 0;
       stop_pub.publish(msg);
@@ -111,27 +114,40 @@ class MonologoDF: public DialogInterface
       ROS_INFO("welcomeIntentCB: %s\n", result.fulfillment_text.c_str());
       speak(result.fulfillment_text);
 
-      std::string state = "", person = "";
+      std::string person = "", last_name = "", country = "";
 
       for (const auto & param : result.parameters)
       {
-        if (param.param_name == "State")
-        {
-            std::cout << "\t" << param.value[0] << std::endl;
-            state = param.value[0];
-        }
         if (param.param_name == "person")
         {
             std::cout << "\t" << param.value[0] << std::endl;
             person = param.value[0];
         }
+        if (param.param_name == "geo-country")
+        {
+            std::cout << "\t" << param.value[0] << std::endl;
+            country = param.value[0];
+        }
+        if (param.param_name == "last-name")
+        {
+            std::cout << "\t" << param.value[0] << std::endl;
+            last_name = param.value[0];
+        }
       }
-      std_msgs::String msg;
-      msg.data = person;
-      if (person != "")
+      
+      std_msgs::String msg_name, msg_country, msg_last_name;
+      
+      msg_name.data = person;
+      msg_country.data = country;
+      msg_last_name.data = last_name;
+      
+      if (person != "" and country != "" and last_name != "")
       {
         disableListen();
-        info_pub.publish(msg);
+        std::cout << country << std::endl;
+        name_pub.publish(msg_name);
+        country_pub.publish(msg_country);
+        last_name_pub.publish(msg_last_name);
       }
       else
       {
@@ -150,7 +166,10 @@ class MonologoDF: public DialogInterface
   private:
     ros::NodeHandle nh_;
     ros::Publisher stop_pub;
-    ros::Publisher info_pub;
+    ros::Publisher name_pub;
+    ros::Publisher country_pub;
+    ros::Publisher last_name_pub;
     ros::Timer timer;
 };
 #endif  // ROBOCUP_HOME_EDUCATION_MONOLOGODF_H
+
