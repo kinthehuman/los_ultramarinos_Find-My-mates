@@ -34,6 +34,7 @@ int main(int argc, char **argv)
   factory.registerFromPlugin(loader.getOSName("ObservarFMM"));
   factory.registerFromPlugin(loader.getOSName("DataCheckFMM"));
   factory.registerFromPlugin(loader.getOSName("DataDumpFMM"));
+  factory.registerFromPlugin(loader.getOSName("NavegarFMM"));
   factory.registerFromPlugin(loader.getOSName("Navegar3FMM"));
   factory.registerFromPlugin(loader.getOSName("Navegar2FMM"));
   factory.registerFromPlugin(loader.getOSName("ControlDataFMM"));

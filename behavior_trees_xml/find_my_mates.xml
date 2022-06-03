@@ -5,6 +5,7 @@
         <KeepRunningUntilFailure>
             <ForceSuccess>
                 <Sequence>
+                    <Action ID="NavegarFMM"/>
                     <Fallback>
                         <Condition ID="ControlDataFMM"/>
                         <Sequence>
@@ -29,6 +30,7 @@
     <TreeNodesModel>
        <Action ID="ObservarFMM"/>
        <Action ID="DataCheckFMM"/>
+       <Action ID="NavegarFMM"/>
        <Action ID="DataDumpFMM"/>
        <Action ID="Navegar3FMM"/>
        <Action ID="Navegar2FMM"/>

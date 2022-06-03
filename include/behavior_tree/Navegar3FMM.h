@@ -19,6 +19,7 @@
 #include "behaviortree_cpp_v3/bt_factory.h"
 #include "geometry_msgs/Twist.h"
 #include "std_msgs/Bool.h"
+#include "std_msgs/Int32.h"
 #include "std_msgs/String.h"
 #include "geometry_msgs/PoseStamped.h"
 #include "move_base_msgs/MoveBaseActionResult.h"
@@ -54,6 +55,7 @@ class Navegar3FMM : public BT::ActionNodeBase
     ros::Publisher activador ;
     ros::Subscriber sub ;
     ros::Publisher resetPub;
+    ros::Publisher dataPub;
     std::string feedBack = "" ;
     
     ros::Time i;
@@ -62,6 +64,7 @@ class Navegar3FMM : public BT::ActionNodeBase
     geometry_msgs::PoseStamped positions[3];
     int counter = 0;
     std_msgs::Bool reset;
+    std_msgs::Int32 result;
     bool all;
 
 

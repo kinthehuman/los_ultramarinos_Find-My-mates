@@ -148,9 +148,9 @@ void callback_bbx(const sensor_msgs::ImageConstPtr& depth, const sensor_msgs::Im
 
 					cv::Vec3b vector_rgb = RgbImageData->image.at<cv::Vec3b>(cv::Point(px,py));
 
-					R_ = vector_rgb[2];
-					G_ = vector_rgb[1];
-					B_ = vector_rgb[0];
+					R_ = r_me;
+					G_ = g_me;
+					B_ = b_me;
 
 					//pp.x = R_;
 					//pp.y = G_;

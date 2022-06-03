@@ -24,6 +24,7 @@ BT::ActionNodeBase(name, config), nh_(), feedBack(" ")
 {
   activador = nh_.advertise<geometry_msgs::PoseStamped>("move_base_simple/goal", 10);
   resetPub = nh_.advertise<std_msgs::Bool>("/reset_data", 10);
+  dataPub = nh_.advertise<std_msgs::Int32>("/position_data", 10);
   sub = nh_.subscribe("/move_base/result", 10, &Navegar3FMM::messageCallback, this);
 
      //P1
@@ -103,7 +104,10 @@ BT::NodeStatus Navegar3FMM::tick()
     if (feedBack == "Goal reached.")
     {
       a = 0;
+
       counter++;
+      result.data = counter;
+      dataPub.publish(result);
       feedBack = "";
       return BT::NodeStatus::SUCCESS;
     }
