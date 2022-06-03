@@ -60,8 +60,8 @@ class Navegar3FMM : public BT::ActionNodeBase
     
     ros::Time i;
     int a = 0;
-    int size = 3;
-    geometry_msgs::PoseStamped positions[3];
+    int size = 6;
+    geometry_msgs::PoseStamped positions[6];
     int counter = 0;
     std_msgs::Bool reset;
     std_msgs::Int32 result;

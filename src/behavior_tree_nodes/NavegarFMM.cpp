@@ -41,7 +41,7 @@ BT::NodeStatus NavegarFMM::tick()
   if (a == 0){
     feedBack = "";
   }
-  if (a == 5)
+  if (a == 20)
   {
     std::cout << a << "\n";
 
@@ -50,14 +50,14 @@ BT::NodeStatus NavegarFMM::tick()
     msg.header.stamp = i;
     msg.header.frame_id = "map";
 
-    msg.pose.position.x = 0.0;
-    msg.pose.position.y = 0.0;
+    msg.pose.position.x = 0.3;
+    msg.pose.position.y = 5.65;
     msg.pose.position.z = 0.0;
 
     msg.pose.orientation.x = 0.0;
     msg.pose.orientation.y = 0.0;
-    msg.pose.orientation.z = 0.0;
-    msg.pose.orientation.w = 1.0;
+    msg.pose.orientation.z = 0.7;
+    msg.pose.orientation.w = -0.7;
 
     activador.publish(msg);
   }

@@ -5,11 +5,15 @@
         <KeepRunningUntilFailure>
             <ForceSuccess>
                 <Sequence>
+
                     <Action ID="NavegarFMM"/>
+
+
                     <Fallback>
                         <Condition ID="ControlDataFMM"/>
                         <Sequence>
                             <Action ID="Navegar3FMM"/>
+
                             <Fallback>
                                 <Condition ID="ControlObservadorFMM"/>
                                 <Action ID="ObservarFMM"/>
@@ -17,7 +21,11 @@
                             <Action ID="DataCheckFMM"/>
                         </Sequence>
                     </Fallback>
+
+
                         <Action ID="Navegar2FMM"/>
+
+
                         <Fallback>
                             <Condition ID="ControlDumpFMM"/>
                             <Action ID="DataDumpFMM"/>

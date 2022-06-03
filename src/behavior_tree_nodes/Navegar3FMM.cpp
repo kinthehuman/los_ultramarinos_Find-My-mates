@@ -31,36 +31,77 @@ BT::ActionNodeBase(name, config), nh_(), feedBack(" ")
     positions[0].header.stamp = i;
     positions[0].header.frame_id = "map";
 
-    positions[0].pose.position.x = 5;
-    positions[0].pose.position.y = 0;
+    positions[0].pose.position.x = -3;
+    positions[0].pose.position.y = 3.9;
+
     positions[0].pose.orientation.x = 0;
     positions[0].pose.orientation.y = 0;
-    positions[0].pose.orientation.z = 0;
-    positions[0].pose.orientation.w = 1;
+    positions[0].pose.orientation.z = 1;
+    positions[0].pose.orientation.w = 0;
 
 
     //P2
     positions[1].header.stamp = i;
     positions[1].header.frame_id = "map";
 
-    positions[1].pose.position.x = 6.8;
-    positions[1].pose.position.y = 4;
+    positions[1].pose.position.x = -3.7;
+    positions[1].pose.position.y = 2.35;
 
     positions[1].pose.orientation.x = 0;
     positions[1].pose.orientation.y = 0;
-    positions[1].pose.orientation.z = 0.382;
-    positions[1].pose.orientation.w = 0.923;
+    positions[1].pose.orientation.z = 0.707;
+    positions[1].pose.orientation.w = -0.707;
 
      //P3
     positions[2].header.stamp = i;
     positions[2].header.frame_id = "map";
 
-    positions[2].pose.position.x = 1.3;
-    positions[2].pose.position.y = 6;
+    positions[2].pose.position.x = -2.3;
+    positions[2].pose.position.y = 2.35;
     positions[2].pose.orientation.x = 0;
     positions[2].pose.orientation.y = 0;
     positions[2].pose.orientation.z = 0.707;
-    positions[2].pose.orientation.w = 0.707;
+    positions[2].pose.orientation.w = -0.707;
+
+
+     //P4
+    positions[3].header.stamp = i;
+    positions[3].header.frame_id = "map";
+
+    positions[3].pose.position.x = -1;
+    positions[3].pose.position.y = 2.55;
+
+    positions[3].pose.orientation.x = 0;
+    positions[3].pose.orientation.y = 0;
+    positions[3].pose.orientation.z = 0.707;
+    positions[3].pose.orientation.w = -0.707;
+
+
+    //P5
+    positions[4].header.stamp = i;
+    positions[4].header.frame_id = "map";
+
+    positions[4].pose.position.x = 0;
+    positions[4].pose.position.y = 2.45;
+
+    positions[4].pose.orientation.x = 0;
+    positions[4].pose.orientation.y = 0;
+    positions[4].pose.orientation.z = 0.707;
+    positions[4].pose.orientation.w = -0.707;
+
+     //P6
+    positions[5].header.stamp = i;
+    positions[5].header.frame_id = "map";
+
+    positions[5].pose.position.x = -0.3;
+    positions[5].pose.position.y = 3.8;
+    positions[5].pose.orientation.x = 0;
+    positions[5].pose.orientation.y = 0;
+    positions[5].pose.orientation.z = 1;
+    positions[5].pose.orientation.w = 0;
+
+
+
 
 }
 
@@ -82,7 +123,7 @@ BT::NodeStatus Navegar3FMM::tick()
     feedBack = "";
   }
 
-  if (a == 5)
+  if (a == 10)
   {
     std::cout << "Navegando a posicion " << counter << "\n";
 

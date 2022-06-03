@@ -81,7 +81,7 @@ void callback_bbx(const sensor_msgs::ImageConstPtr& depth, const sensor_msgs::Im
 		cv::erode(DepthImageData->image, profundidadG_, cv::Mat());
 		//////////////////////******************CAMBIOS*****************
 
-		RgbImageData = cv_bridge::toCvCopy(*rgb, sensor_msgs::image_encodings::RGB16);
+		RgbImageData = cv_bridge::toCvCopy(*rgb, sensor_msgs::image_encodings::RGB8);
 		//cv::Mat rgb = RgbImageData->image;
 		//cv::erode(RgbImageData->image, rgb, cv::Mat());
 
@@ -98,18 +98,18 @@ void callback_bbx(const sensor_msgs::ImageConstPtr& depth, const sensor_msgs::Im
 		
 		for(int i=0;i<boxes->bounding_boxes.size();i++)
 		{
-			if (boxes->bounding_boxes[i].Class == tag)
+			if (boxes->bounding_boxes[i].Class == tag && (boxes->bounding_boxes[i].xmax - boxes->bounding_boxes[i].xmin > px_center) && (boxes->bounding_boxes[i].ymax - boxes->bounding_boxes[i].ymin > py_center))
 			{
 				float px = (boxes->bounding_boxes[i].xmax + boxes->bounding_boxes[i].xmin) / 2;
 				float py = 2 * (boxes->bounding_boxes[i].ymax + boxes->bounding_boxes[i].ymin) / 3;
 				
 
 				float dist = profundidadG_.at<float>(cv::Point(px, py)) * 0.001f;
-
+				
 
 				if (dist < min_dist)
 				{
-					min_dist = dist;
+					
 					//pp.x = dist;
 					//float angle = (px - px_center)/(px_center);
 					//pp.y = angle;
@@ -123,9 +123,9 @@ void callback_bbx(const sensor_msgs::ImageConstPtr& depth, const sensor_msgs::Im
 					int x_f = px + lado ;         //   |            Ejes en cv2 
 					int y_f = py + lado ;         //   | 
                                                   //   v Y
-					float r_me = 0 ;
-					float g_me = 0 ;
-					float b_me = 0 ;
+					u_int r_me = 0 ;
+					u_int g_me = 0 ;
+					u_int b_me = 0 ;
 
 					float n = ((lado )*2 +1 )*((lado )*2 +1 )  ; // numero de pixels en el area
 
@@ -133,9 +133,9 @@ void callback_bbx(const sensor_msgs::ImageConstPtr& depth, const sensor_msgs::Im
 						for(int y = y_i ; y < y_f ;y++ ){
 
 							cv::Vec3b vector_rgb = RgbImageData->image.at<cv::Vec3b>(cv::Point(x,y)); // saca los valores rgb del pixel x,y
-                             r_me += vector_rgb[2] ;
+                             r_me += vector_rgb[0] ;
 							 g_me += vector_rgb[1] ;
-                             b_me += vector_rgb[0] ;	
+                             b_me += vector_rgb[2] ;	
 						}
 					}
 
@@ -148,9 +148,9 @@ void callback_bbx(const sensor_msgs::ImageConstPtr& depth, const sensor_msgs::Im
 
 					cv::Vec3b vector_rgb = RgbImageData->image.at<cv::Vec3b>(cv::Point(px,py));
 
-					R_ = r_me;
-					G_ = g_me;
-					B_ = b_me;
+					R_ = (double)r_me;
+					G_ = (double)g_me;
+					B_ = (double)b_me;
 
 					//pp.x = R_;
 					//pp.y = G_;
@@ -163,9 +163,9 @@ void callback_bbx(const sensor_msgs::ImageConstPtr& depth, const sensor_msgs::Im
 
 
 					if( (R_ != 0 || G_ != 0 || B_ != 0 ) && values_counter < max_vals){
-						Rs[values_counter] = R_;
-						Gs[values_counter] = G_;
-						Bs[values_counter] = B_;
+						Rs[values_counter] = (double)R_;
+						Gs[values_counter] = (double)G_;
+						Bs[values_counter] = (double)B_;
 
 						//ROS_INFO("R = %d", Rs[values_counter]);
 						//ROS_INFO("G = %d", Gs[values_counter]);

@@ -50,14 +50,14 @@ BT::NodeStatus Navegar2FMM::tick()
     msg.header.stamp = i;
     msg.header.frame_id = "map";
 
-    msg.pose.position.x = 4.0;
-    msg.pose.position.y = 0.0;
+    msg.pose.position.x = -3.45;
+    msg.pose.position.y = 5.65;
     msg.pose.position.z = 0.0;
 
     msg.pose.orientation.x = 0.0;
     msg.pose.orientation.y = 0.0;
-    msg.pose.orientation.z = 0.0;
-    msg.pose.orientation.w = 1.0;
+    msg.pose.orientation.z = 1.0;
+    msg.pose.orientation.w = 0.0;
 
     activador.publish(msg);
   }

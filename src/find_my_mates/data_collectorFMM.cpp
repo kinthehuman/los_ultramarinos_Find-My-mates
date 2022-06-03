@@ -115,7 +115,7 @@ RGB white = {
     "WHITE",  
 };
 
-RGB rainbow[] = {violet,purple,blue,green,yellow,orange,red,black,white};
+RGB rainbow[] = {blue,green,orange,white};
 double ColourDistance(RGB e1, RGB e2)
 {
   long rmean = ( (long)e1.r + (long)e2.r ) / 2;
@@ -128,7 +128,7 @@ double ColourDistance(RGB e1, RGB e2)
 std::string getColor(RGB valores){
     double d_min;
     int result;
-    for(int i = 0; i < 9; i++)
+    for(int i = 0; i < 4; i++)
     {
         if (( i == 0) || (ColourDistance(valores, rainbow[i]) < d_min) )
         {
@@ -185,7 +185,7 @@ void dump(ros::Publisher talkPub, ros::Publisher dumpPub, Person people[], int p
     std::stringstream status;
     for (int i = 0; i < people_counter; i++)
     {
-        ss << people[i].name << " is at position " << people[i].position << ", is wearing a " << people[i].color << " shirt and is is from " << people[i].country << ".\n";
+        ss << people[i].name << " is at position " << people[i].position << ", is wearing a " << people[i].color << " shirt and is from " << people[i].country << ".\n";
     }
     msg.data = ss.str();
 	talkPub.publish(msg);
